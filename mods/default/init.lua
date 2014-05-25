@@ -7,7 +7,23 @@ WATER_ALPHA = 200
 WATER_VISC = 1
 LAVA_VISC = 7
 LIGHT_MAX = 14
-SNOW_START = 27
+MG_NAME = "none"
+SNOW_START = 0
+
+minetest.register_on_mapgen_init(function(MapgenParams)
+	if MapgenParams.mgname then
+		mgname = MapgenParams.mgname
+		MG_NAME = MapgenParams.mgname
+	else
+		io.write("New or unknown mapgen used, will use MGV6 defaults.")
+	end
+	
+	if mgname == "v7" then
+		SNOW_START = 37
+	else
+		SNOW_START = 27
+	end
+end)
 
 -- Definitions made by this mod that other mods can use too
 default = {}
@@ -27,6 +43,7 @@ dofile(minetest.get_modpath("default").."/sounds.lua")
 dofile(minetest.get_modpath("default").."/nodes.lua")
 dofile(minetest.get_modpath("default").."/plants.lua")
 dofile(minetest.get_modpath("default").."/mapgen.lua")
+dofile(minetest.get_modpath("default").."/mapgenv7.lua")
 dofile(minetest.get_modpath("default").."/aliases.lua")
 
 if load_more then
